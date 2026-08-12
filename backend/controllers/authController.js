@@ -13,15 +13,28 @@ const login = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'All fields are required' })
     }
 
-    const foundUser = await User.findOne({ username }).exec()
+    console.log(`[AUTH DEBUG] Searching for user: "${username}"`)
 
-    if (!foundUser || !foundUser.active) {
+    if (!foundUser) {
+        console.log(`[AUTH DEBUG] FAIL: User "${username}" NOT FOUND in MongoDB.`)
         return res.status(401).json({ message: 'Unauthorized' })
     }
 
+    console.log(`[AUTH DEBUG] User found. Active status: ${foundUser.active}`)
+    if (!foundUser.active) {
+        console.log(`[AUTH DEBUG] FAIL: User "${username}" is inactive (active: false).`)
+        return res.status(401).json({ message: 'Unauthorized' })
+    }
+
+    console.log(`[AUTH DEBUG] Comparing bcrypt passwords...`)
     const match = await bcrypt.compare(password, foundUser.password)
 
-    if (!match) return res.status(401).json({ message: 'Unauthorized' })
+    if (!match) {
+        console.log(`[AUTH DEBUG] FAIL: Password comparison mismatch.`)
+        return res.status(401).json({ message: 'Unauthorized' })
+    }
+
+    console.log(`[AUTH DEBUG] SUCCESS: Authentication passed!`)
 
     const accessToken = jwt.sign(
         {
