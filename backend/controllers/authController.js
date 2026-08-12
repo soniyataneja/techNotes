@@ -15,6 +15,9 @@ const login = asyncHandler(async (req, res) => {
 
     console.log(`[AUTH DEBUG] Searching for user: "${username}"`)
 
+    // MISSING LINE ADDED HERE:
+    const foundUser = await User.findOne({ username }).exec()
+
     if (!foundUser) {
         console.log(`[AUTH DEBUG] FAIL: User "${username}" NOT FOUND in MongoDB.`)
         return res.status(401).json({ message: 'Unauthorized' })
@@ -55,10 +58,10 @@ const login = asyncHandler(async (req, res) => {
 
     // Create secure cookie with refresh token 
     res.cookie('jwt', refreshToken, {
-        httpOnly: true, //accessible only by web server 
-        secure: true, //https
-        sameSite: 'None', //cross-site cookie 
-        maxAge: 7 * 24 * 60 * 60 * 1000 //cookie expiry: set to match rT
+        httpOnly: true, // accessible only by web server 
+        secure: true,   // required for cross-domain HTTPS
+        sameSite: 'None', // required for cross-domain cookies
+        maxAge: 7 * 24 * 60 * 60 * 1000
     })
 
     // Send accessToken containing username and roles 
@@ -78,7 +81,7 @@ const refresh = (req, res) => {
     jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
-        asyncHandler(async (err, decoded) => {
+        async (err, decoded) => {
             if (err) return res.status(403).json({ message: 'Forbidden' })
 
             const foundUser = await User.findOne({ username: decoded.username }).exec()
@@ -97,7 +100,7 @@ const refresh = (req, res) => {
             )
 
             res.json({ accessToken })
-        })
+        }
     )
 }
 
@@ -106,7 +109,7 @@ const refresh = (req, res) => {
 // @access Public - just to clear cookie if exists
 const logout = (req, res) => {
     const cookies = req.cookies
-    if (!cookies?.jwt) return res.sendStatus(204) //No content
+    if (!cookies?.jwt) return res.sendStatus(204) // No content
     res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true })
     res.json({ message: 'Cookie cleared' })
 }
