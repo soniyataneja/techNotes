@@ -2,11 +2,12 @@ const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
-
+console.log("hi")
 // @desc Login
 // @route POST /auth
 // @access Public
 const login = asyncHandler(async (req, res) => {
+    
     console.log('[AUTH DEBUG] Received body:', req.body)
     const { username, password } = req.body
 
