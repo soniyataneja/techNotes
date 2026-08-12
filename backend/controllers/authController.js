@@ -7,6 +7,7 @@ const asyncHandler = require('express-async-handler')
 // @route POST /auth
 // @access Public
 const login = asyncHandler(async (req, res) => {
+    console.log('[AUTH DEBUG] Received body:', req.body)
     const { username, password } = req.body
 
     if (!username || !password) {
