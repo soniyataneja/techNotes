@@ -2,7 +2,7 @@
 
 A full-stack ticketing and repair notes management application built for tech businesses and IT support teams. Built following Dave Gray's MERN stack architecture, featuring secure role-based access control (RBAC), note assignment, employee management, and real-time state synchronization via Redux Toolkit Query.
 
-🔗 **Live Demo:** [https://your-technotes-demo-link.com](https://your-technotes-demo-link.com)
+🔗 **Live Demo:** [https://technotes-nwwc.onrender.com/](https://technotes-nwwc.onrender.com/)
 
 ---
 
@@ -41,4 +41,3 @@ A full-stack ticketing and repair notes management application built for tech bu
 ---
 
 
-└── README.md
