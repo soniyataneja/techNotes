@@ -33,10 +33,10 @@ A full-stack ticketing and repair notes management application built for tech bu
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React, Redux Toolkit & RTK Query, React Router v6, FontAwesome Icons, Pure CSS
+- **Frontend:** React, Redux Toolkit & RTK Query,CSS
 - **Backend:** Node.js, Express.js
-- **Database:** MongoDB Atlas with Mongoose ODM (includes `mongoose-sequence` plugin)
-- **Authentication:** JSON Web Tokens (JWT), `bcrypt`, `cookie-parser`
+- **Database:** MongoDB Atlas with Mongoose ODM 
+- **Authentication:** JSON Web Tokens (JWT)
 
 ---
 
